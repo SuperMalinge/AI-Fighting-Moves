@@ -2,7 +2,7 @@
 
 An advanced AI system that learns fighting styles from video content and predicts optimal defensive moves. The system uses computer vision and deep learning to analyze combat techniques and provide real-time defense suggestions.
 
-![Fighting Style AI Demo](demo.gif)
+<img src="fightingai.png" width="600" alt="GUI Preview">
 
 ## Features
 
