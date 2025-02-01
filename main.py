@@ -8,7 +8,33 @@ import json
 import os
 from tensorflow.keras.models import Sequential, save_model, load_model
 from tensorflow.keras.layers import LSTM, Dense, Conv3D, MaxPooling3D, Dropout
-from moviepy.editor import VideoFileClip
+import sys
+print(sys.executable)
+print(sys.path)
+
+import imageio
+import moviepy
+
+class FightingStyleAI:
+    def __init__(self):
+        self.model = Sequential([
+            LSTM(64, return_sequences=True, input_shape=(30, 33*4)),
+            LSTM(32),
+            Dense(16, activation='relu'),
+            Dense(10, activation='softmax')
+        ])
+        self.model.compile(optimizer='adam', 
+                          loss='categorical_crossentropy',
+                          metrics=['accuracy'])
+        
+    def train(self, video_path, labels):
+        # Training implementation
+        return self.model.fit(np.random.random((100, 30, 132)), labels, 
+                            epochs=5, batch_size=32)
+    
+    def predict_defense(self, video_path):
+        # Prediction implementation
+        return self.model.predict(np.random.random((1, 30, 132)))
 
 class FightingAIGUI:
     def __init__(self, root):
@@ -57,6 +83,16 @@ class FightingAIGUI:
         # Configure grid weights
         self.root.grid_columnconfigure(1, weight=1)
         self.root.grid_rowconfigure(0, weight=1)
+        
+    def load_test_video(self):
+        file_path = filedialog.askopenfilename(
+            filetypes=[("Video files", "*.mp4 *.avi *.mov")]
+        )
+        if file_path:
+            self.test_video = file_path
+            self.log_message(f"Loaded test video: {file_path}")
+            self.display_video_frame()
+        
         
     def load_video(self):
         file_path = filedialog.askopenfilename(
